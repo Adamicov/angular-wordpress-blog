@@ -7,7 +7,7 @@
 
     <div class="comment-wrapper">
       <div class="comments mt-4" *ngIf="comments$ | async as comments">
-        <app-comment *ngFor="let comment of comments" [comment]="comment"> </app-comment>
+        <app-comment *ngFor="let comment of comments | paginate: paginationConfig" [comment]="comment"> </app-comment>
       </div>
       <ngx-loading [show]="commentsLoader$ | async"></ngx-loading>
       <pagination-controls (pageChange)="pageChanges($event)"></pagination-controls>

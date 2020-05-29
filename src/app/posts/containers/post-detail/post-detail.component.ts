@@ -14,6 +14,8 @@ import { PostApi } from '../../api/post.api';
 import { Comment } from '@models/comment';
 import { Pagination } from '@models/pagination';
 import { config } from '@core/config';
+import { Page } from '@models/page';
+import { Id } from '@models/types';
 
 @Component({
   selector: 'app-post-detail',
@@ -30,6 +32,7 @@ export class PostDetailComponent implements OnInit {
   pagination: Pagination = new Pagination(config.COMMENTS_PER_PAGE);
   paginationConfig: Partial<Pagination>;
 
+  postId: Id;
   error = false;
 
   constructor(private route: ActivatedRoute, private api: PostApi) {}
@@ -43,21 +46,13 @@ export class PostDetailComponent implements OnInit {
       filter((post) => !!post)
     );
 
-    this.comments$ = this.post$.pipe(
-      tap(() => this.commentsLoader$.next(true)),
-      mergeMap((post) => this.getComments(post)),
-      tap(() => this.commentsLoader$.next(false))
-    );
+    this.fetchComments();
   }
 
   getPost(slug: string): Observable<Post> {
-    return this.api
-      .getPostBySlug(slug)
-      .pipe(catchError((err) => this.handleError(err)));
-  }
-
-  getComments(post: Post): Observable<Comment[]> {
-    return this.api.getCommentsByPostId(post.id);
+    return this.api.getPostBySlug(slug).pipe(
+      catchError((err) => this.handleError(err))
+    );
   }
 
   handleError(error) {
@@ -65,5 +60,30 @@ export class PostDetailComponent implements OnInit {
     return of(null);
   }
 
-  pageChanges(page: number) {}
+  fetchComments(): void {
+    const currentPage = this.pagination.getCurrentPage();
+    this.comments$ = this.post$.pipe(
+      tap(() => this.commentsLoader$.next(true)),
+      map((post) => post.id),
+      mergeMap((id) => this.api.getCommentsByPostId(id, currentPage)),
+      switchMap((page) => this.setPagination(page)),
+      tap(() => this.commentsLoader$.next(false))
+    );
+  }
+
+  setPagination(page: Page<Comment>): Observable<Comment[]> {
+    this.pagination.setTotalItems(page.itemsCount);
+    if (!this.pagination.getCurrentPage()) {
+      this.pagination.setCurrentPage(1);
+    }
+    this.paginationConfig = this.pagination.getConfig();
+    console.log(page.items);
+    return of(page.items);
+  }
+
+  pageChanges(page: number) {
+    this.pagination.setCurrentPage(page);
+    this.paginationConfig = this.pagination.getConfig();
+    this.fetchComments();
+  }
 }

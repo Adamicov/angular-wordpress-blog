@@ -41,8 +41,8 @@ export class PostsComponent implements OnInit {
       tap((pageNumber) => this.pagination.setCurrentPage(pageNumber)),
       switchMap((pageNumber) => this.api.getPosts(pageNumber)),
       switchMap((pagedRes) => this.setPagination(pagedRes)),
+      catchError((err) => this.handleError(err)),
       tap(() => this.loading$.next(false)),
-      catchError((err) => this.handleError(err))
     );
   }
 
@@ -58,7 +58,6 @@ export class PostsComponent implements OnInit {
   }
 
   handleError(error) {
-    this.loading$.next(false);
     this.error = true;
     return of([]);
   }

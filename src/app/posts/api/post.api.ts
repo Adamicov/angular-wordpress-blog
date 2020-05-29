@@ -31,13 +31,12 @@ export class PostApi {
     return this.http.get<any>(requestUri).pipe(map((post) => Post.adapt(post)));
   }
 
-  getCommentsByPostId(postId: Id, page = 1): Observable<Comment[]> {
+  getCommentsByPostId(postId: Id, page = 1): Observable<Page<Comment>> {
     const commentUri = `/${postId}/replies`;
     const query = `/?number=${this.COMMENTS_NUMBER}&page=${page}`;
     const requestUri = this.API_URL + commentUri + query;
     return this.http.get<any>(requestUri).pipe(
-      map((res) => res.comments),
-      map((comments) => comments.map(Comment.adapt))
+      map((res) => new Page<Comment>(Comment.adaptList(res.comments), res.found))
     );
   }
 }
