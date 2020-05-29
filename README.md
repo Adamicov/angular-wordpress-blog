@@ -1,27 +1,110 @@
-# AngularInterviewTask
+# Angular Wordpress Blog
+This Angular project is created for the recrutation purpose. It uses public wordpress [API](https://developer.wordpress.com/docs/api/) to get
+posts and comments from  https://en.blog.wordpress.com/.
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.7.
+## Additional libraries
+ - ngx-pagination
+ - ngx-loader
+ - Bootstrap
+ - prettier (dev)
 
-## Development server
+## Code organisation
+```
+src
+├── app
+│   ├── app.component.css
+│   ├── app.component.html
+│   ├── app.component.spec.ts
+│   ├── app.component.ts
+│   ├── app.module.ts
+│   ├── app-routing.module.ts
+│   ├── core
+│   │   ├── config.ts
+│   │   └── core.module.ts
+│   ├── models
+│   │   ├── author.ts
+│   │   ├── comment.ts
+│   │   ├── page.ts
+│   │   ├── pagination.ts
+│   │   ├── post.ts
+│   │   └── types.ts
+│   ├── posts
+│   │   ├── api
+│   │   │   └── post.api.ts
+│   │   ├── components
+│   │   │   ├── comment
+│   │   │   │   ├── comment.component.css
+│   │   │   │   ├── comment.component.html
+│   │   │   │   ├── comment.component.spec.ts
+│   │   │   │   └── comment.component.ts
+│   │   │   └── post
+│   │   │       ├── post.component.css
+│   │   │       ├── post.component.html
+│   │   │       ├── post.component.spec.ts
+│   │   │       └── post.component.ts
+│   │   ├── containers
+│   │   │   ├── post-detail
+│   │   │   │   ├── post-detail.component.css
+│   │   │   │   ├── post-detail.component.html
+│   │   │   │   ├── post-detail.component.spec.ts
+│   │   │   │   └── post-detail.component.ts
+│   │   │   └── posts
+│   │   │       ├── posts.component.css
+│   │   │       ├── posts.component.html
+│   │   │       ├── posts.component.spec.ts
+│   │   │       └── posts.component.ts
+│   │   ├── post-routing.module.ts
+│   │   └── posts.module.ts
+│   └── shared
+│       ├── shared.module.ts
+│       └── utils.service.ts
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+```
+I have made 3 modules:
+- core
+- shared
+- posts
+#### Core
+Core is responsible for importing core modules, such as HttpClient and RoutingModule. It's also contains config 
+that has an api link and pagination settings.
 
-## Code scaffolding
+#### Shared
+Shared is responsible for future components created. Currently, it exports just CommonModule. It also contains utility service with pagination helper functions.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+#### Posts
+```
+posts
+├── api
+│   └── post.api.ts
+├── components
+│   ├── comment
+│   │   ├── comment.component.css
+│   │   ├── comment.component.html
+│   │   ├── comment.component.spec.ts
+│   │   └── comment.component.ts
+│   └── post
+│       ├── post.component.css
+│       ├── post.component.html
+│       ├── post.component.spec.ts
+│       └── post.component.ts
+├── containers
+│   ├── post-detail
+│   │   ├── post-detail.component.css
+│   │   ├── post-detail.component.html
+│   │   ├── post-detail.component.spec.ts
+│   │   └── post-detail.component.ts
+│   └── posts
+│       ├── posts.component.css
+│       ├── posts.component.html
+│       ├── posts.component.spec.ts
+│       └── posts.component.ts
+├── post-routing.module.ts
+└── posts.module.ts
 
-## Build
+```
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+Post module contains 2 smart components and 2 dummy components. Containers are responsible for using post service, fetch data and
+deliver it to the template.
 
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+#### Models
+Models are responsible for modeling api data.
