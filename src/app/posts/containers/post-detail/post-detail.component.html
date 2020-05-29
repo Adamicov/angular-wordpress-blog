@@ -1,0 +1,19 @@
+<div class="container">
+  <div class="post-wrapper" *ngIf="!error">
+    <div class="post" *ngIf="post$ | async as post" [innerHTML]="post.content">
+    </div>
+
+    <ngx-loading [show]="postLoader$ | async"></ngx-loading>
+
+    <div class="comment-wrapper">
+      <div class="comments mt-4" *ngIf="comments$ | async as comments">
+        <app-comment *ngFor="let comment of comments" [comment]="comment"> </app-comment>
+      </div>
+      <ngx-loading [show]="commentsLoader$ | async"></ngx-loading>
+      <pagination-controls (pageChange)="pageChanges($event)"></pagination-controls>
+    </div>
+  </div>
+
+  <h2 *ngIf="error">error</h2>
+
+</div>

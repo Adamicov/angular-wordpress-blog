@@ -1,0 +1,15 @@
+<div class="container">
+  <div class="posts" *ngIf="!error">
+    <div *ngIf="posts$ | async as posts">
+      <app-post
+        *ngFor="let post of posts | paginate: paginationConfig"
+        [post]="post"
+        (postClicked)="onClick($event)"></app-post>
+      <div class="d-flex justify-content-center mt-3">
+        <pagination-controls (pageChange)="pageChanges($event)"></pagination-controls>
+      </div>
+    </div>
+  </div>
+  <h2 *ngIf="error">error</h2>
+  <ngx-loading [show]="loading$ | async"></ngx-loading>
+</div>

@@ -1,0 +1,6 @@
+<div class="card mb-2" style="width: 25rem" (click)="this.postClicked.emit(post)">
+  <img class="card-img-top" [src]="post.thumbnail">
+  <div class="card-body">
+    <div class="card-title" [innerHTML]="post.title">{{post.title}}</div>
+  </div>
+</div>
