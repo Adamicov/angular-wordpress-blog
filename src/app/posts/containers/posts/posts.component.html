@@ -10,9 +10,9 @@
           <pagination-controls (pageChange)="pageChanges($event)"></pagination-controls>
         </div>
       </div>
+      <ngx-loading *ngIf="loading$ | async as loading" [show]="loading" [config]="{fullScreenBackdrop: true}"></ngx-loading>
     </div>
     <h2 *ngIf="error">error</h2>
   </div>
 </div>
-<ngx-loading *ngIf="loading$ | async as loading" [show]="loading"></ngx-loading>
 

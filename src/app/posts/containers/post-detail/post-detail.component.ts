@@ -32,7 +32,6 @@ export class PostDetailComponent implements OnInit {
   pagination: Pagination = new Pagination(config.COMMENTS_PER_PAGE);
   paginationConfig: Partial<Pagination>;
 
-  postId: Id;
   error = false;
 
   constructor(private route: ActivatedRoute, private api: PostApi) {}
