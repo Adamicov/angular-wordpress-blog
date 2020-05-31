@@ -1,23 +1,19 @@
-
 <div class="container">
   <div class="post-wrapper" *ngIf="!error">
     <div class="post" *ngIf="post$ | async as post">
-      <h1 class="h1">{{post.title}}</h1>
+      <h1 class="h1" [innerHTML]="post.title | safe: 'html'"></h1>
       <h4 class="h4 text-muted" [innerHTML]="post.excerpt | safe : 'html'"></h4>
       <div class="details d-flex justify-content-between align-items-center">
         <app-author [author]="post.author"></app-author>
         <small class="text-muted">{{post.date | date}}</small>
       </div>
       <hr class="my-4">
-      <div class="content" [innerHTML]="post.content"></div>
+      <div class="content" [innerHTML]="post.content | safe: 'html'"></div>
     </div>
-<!--    <div class="post" *ngIf="post$ | async as post" [innerHTML]="post.content | safe: 'html'">-->
-<!--    </div>-->
-
-    <ngx-loading [show]="postLoader$ | async " [config]="{fullScreenBackdrop: true}"></ngx-loading>
+    <ngx-loading [show]="postLoader$ | async "></ngx-loading>
 
     <div class="comment-wrapper">
-      <ngx-loading [show]="commentsLoader$ | async" [config]="{fullScreenBackdrop: true}">Loading...</ngx-loading>
+      <ngx-loading [show]="commentsLoader$ | async" [config]="{fullScreenBackdrop: true}"></ngx-loading>
       <p class="lead">
         {{commentsAmount}} Comments
       </p>

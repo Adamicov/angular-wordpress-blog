@@ -56,7 +56,7 @@ export class PostDetailComponent implements OnInit {
   fetchComments(): void {
     const currentPage = this.pagination.getCurrentPage();
     this.comments$ = this.post$.pipe(
-      tap(() => setTimeout(() => this.commentsLoader$.next(true))),
+      tap(() =>  this.commentsLoader$.next(true)),
       map((post) => post.id),
       mergeMap((id) => this.api.getCommentsByPostId(id, currentPage)),
       switchMap((page) => this.setPagination(page)),
