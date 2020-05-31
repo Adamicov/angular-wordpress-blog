@@ -2,7 +2,7 @@ import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {Post} from '@models/post';
 import {BehaviorSubject, Observable, of} from 'rxjs';
 import {ActivatedRoute} from '@angular/router';
-import {catchError, filter, map, mergeMap, switchMap, tap,} from 'rxjs/operators';
+import {catchError, filter, map, mergeMap, switchMap, tap} from 'rxjs/operators';
 import {PostApi} from '../../api/post.api';
 import {Comment} from '@models/comment';
 import {Pagination} from '@models/pagination';
@@ -13,7 +13,7 @@ import {Page} from '@models/page';
   selector: 'app-post-detail',
   templateUrl: './post-detail.component.html',
   styleUrls: ['./post-detail.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PostDetailComponent implements OnInit {
   post$: Observable<Post>;
@@ -25,6 +25,7 @@ export class PostDetailComponent implements OnInit {
   pagination: Pagination = new Pagination(config.COMMENTS_PER_PAGE);
   paginationConfig: Partial<Pagination>;
 
+  commentsAmount: number;
   error = false;
 
   constructor(private route: ActivatedRoute, private api: PostApi) {}
@@ -42,9 +43,9 @@ export class PostDetailComponent implements OnInit {
   }
 
   getPost(slug: string): Observable<Post> {
-    return this.api.getPostBySlug(slug).pipe(
-      catchError((err) => this.handleError(err))
-    );
+    return this.api
+      .getPostBySlug(slug)
+      .pipe(catchError((err) => this.handleError(err)));
   }
 
   handleError(error) {
@@ -64,12 +65,12 @@ export class PostDetailComponent implements OnInit {
   }
 
   setPagination(page: Page<Comment>): Observable<Comment[]> {
+    this.commentsAmount = page.itemsCount;
     this.pagination.setTotalItems(page.itemsCount);
     if (!this.pagination.getCurrentPage()) {
       this.pagination.setCurrentPage(1);
     }
     this.paginationConfig = this.pagination.getConfig();
-    console.log(page.items);
     return of(page.items);
   }
 

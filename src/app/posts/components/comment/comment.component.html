@@ -1,2 +1,9 @@
-<div class="card" [innerHTML]="comment.content">
+<div class="card p-3 m-2">
+  <div class="details d-flex align-items-center justify-content-between">
+    <app-author [author]="comment.author"></app-author>
+    <small class="text-muted ml-2 mb-0">{{comment.date | date : 'medium'}}</small>
+  </div>
+  <div class="content mt-2" [innerHTML]="comment.content | safe: 'html'">
+
+  </div>
 </div>

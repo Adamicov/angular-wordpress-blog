@@ -1,6 +1,17 @@
-<div class="card mb-2" style="width: 25rem" (click)="this.postClicked.emit(post)">
-  <img class="card-img-top" [src]="post.thumbnail">
-  <div class="card-body">
-    <div class="card-title" [innerHTML]="post.title">{{post.title}}</div>
+<div class="card shadow mb-4" style="max-width: 700px" (click)="this.postClicked.emit(post)">
+  <div class="row no-gutters">
+    <div class="col-md-4">
+      <img [src]="post.thumbnail" class="card-img" alt="...">
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        <h5 class="card-title" [innerHTML]="post.title"></h5>
+        <p class="card-text" [innerHTML]="post.excerpt"></p>
+        <div class="post-details d-flex justify-content-between align-items-center">
+          <app-author [author]="post.author"></app-author>
+          <small class="text-muted">{{post.date | date}}</small>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

@@ -43,7 +43,9 @@ export class PostsComponent implements OnInit {
       switchMap((pageNumber) => this.api.getPosts(pageNumber)),
       switchMap((pagedRes) => this.setPagination(pagedRes)),
       catchError((err) => this.handleError(err)),
-      tap(() => this.loading$.next(false)),
+      tap(() => {
+        this.loading$.next(false);
+      }),
     );
   }
 
@@ -64,6 +66,10 @@ export class PostsComponent implements OnInit {
   }
 
   pageChanges(page: number) {
+    window.scroll({
+      top: 0,
+      behavior: "smooth",
+    });
     this.router.navigate([], { queryParams: { page } });
   }
 

@@ -7,6 +7,7 @@ import { CommentComponent } from './components/comment/comment.component';
 import { PostRoutingModule } from './post-routing.module';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { NgxLoadingModule } from 'ngx-loading';
+import { AuthorComponent } from './components/author/author.component';
 
 @NgModule({
   declarations: [
@@ -14,6 +15,7 @@ import { NgxLoadingModule } from 'ngx-loading';
     PostDetailComponent,
     PostComponent,
     CommentComponent,
+    AuthorComponent,
   ],
   imports: [
     SharedModule,

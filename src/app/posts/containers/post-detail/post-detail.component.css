@@ -1,5 +1,7 @@
-.post img {
-    width: 100%;
+:host ::ng-deep img {
+  max-width: 100% !important;
+  max-height: 600px !important;
+  object-fit: cover;
 }
 
 .comment-wrapper {

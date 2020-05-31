@@ -9,7 +9,8 @@ export class Post {
     public author: Author,
     public slug: string,
     public thumbnail: string,
-    public content: string
+    public content: string,
+    public excerpt: string
   ) {}
 
   static adapt(item: any): Post {
@@ -20,7 +21,8 @@ export class Post {
       Author.adapt(item.author),
       item.slug,
       item.featured_image,
-      item.content
+      item.content,
+      item.excerpt
     );
   }
 
