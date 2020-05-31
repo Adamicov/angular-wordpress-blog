@@ -1,26 +1,19 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { Post } from '@models/post';
-import { BehaviorSubject, from, Observable, of } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
-import {
-  catchError,
-  filter,
-  map,
-  mergeMap,
-  switchMap,
-  tap,
-} from 'rxjs/operators';
-import { PostApi } from '../../api/post.api';
-import { Comment } from '@models/comment';
-import { Pagination } from '@models/pagination';
-import { config } from '@core/config';
-import { Page } from '@models/page';
-import { Id } from '@models/types';
+import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
+import {Post} from '@models/post';
+import {BehaviorSubject, Observable, of} from 'rxjs';
+import {ActivatedRoute} from '@angular/router';
+import {catchError, filter, map, mergeMap, switchMap, tap,} from 'rxjs/operators';
+import {PostApi} from '../../api/post.api';
+import {Comment} from '@models/comment';
+import {Pagination} from '@models/pagination';
+import {config} from '@core/config';
+import {Page} from '@models/page';
 
 @Component({
   selector: 'app-post-detail',
   templateUrl: './post-detail.component.html',
   styleUrls: ['./post-detail.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PostDetailComponent implements OnInit {
   post$: Observable<Post>;
@@ -62,7 +55,7 @@ export class PostDetailComponent implements OnInit {
   fetchComments(): void {
     const currentPage = this.pagination.getCurrentPage();
     this.comments$ = this.post$.pipe(
-      tap(() => this.commentsLoader$.next(true)),
+      tap(() => setTimeout(() => this.commentsLoader$.next(true))),
       map((post) => post.id),
       mergeMap((id) => this.api.getCommentsByPostId(id, currentPage)),
       switchMap((page) => this.setPagination(page)),

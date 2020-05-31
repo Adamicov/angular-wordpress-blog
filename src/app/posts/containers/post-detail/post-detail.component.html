@@ -3,13 +3,13 @@
     <div class="post" *ngIf="post$ | async as post" [innerHTML]="post.content">
     </div>
 
-    <ngx-loading [show]="postLoader$ | async"></ngx-loading>
+    <ngx-loading [show]="postLoader$ | async" [config]="{fullScreenBackdrop: true}"></ngx-loading>
 
-    <div class="comment-wrapper">
+    <div class="comment-wrapper border">
       <div class="comments mt-4" *ngIf="comments$ | async as comments">
         <app-comment *ngFor="let comment of comments | paginate: paginationConfig" [comment]="comment"> </app-comment>
       </div>
-      <ngx-loading [show]="commentsLoader$ | async"></ngx-loading>
+      <ngx-loading [show]="commentsLoader$ | async" [config]="{fullScreenBackdrop: true}">Loading...</ngx-loading>
       <pagination-controls (pageChange)="pageChanges($event)"></pagination-controls>
     </div>
   </div>

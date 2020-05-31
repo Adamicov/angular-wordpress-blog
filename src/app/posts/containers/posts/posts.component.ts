@@ -1,21 +1,22 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
 
-import { config } from '@core/config';
-import { UtilsService } from '@shared/utils.service';
-import { Post } from '@models/post';
-import { Page } from '@models/page';
-import { Pagination } from '@models/pagination';
+import {config} from '@core/config';
+import {UtilsService} from '@shared/utils.service';
+import {Post} from '@models/post';
+import {Page} from '@models/page';
+import {Pagination} from '@models/pagination';
 
-import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
-import { catchError, map, switchMap, tap } from 'rxjs/operators';
+import {BehaviorSubject, Observable, of, throwError} from 'rxjs';
+import {catchError, map, switchMap, tap} from 'rxjs/operators';
 
-import { PostApi } from '../../api/post.api';
+import {PostApi} from '../../api/post.api';
 
 @Component({
   selector: 'app-posts',
   templateUrl: './posts.component.html',
   styleUrls: ['./posts.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PostsComponent implements OnInit {
   posts$: Observable<Post[]>;
