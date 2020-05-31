@@ -103,7 +103,7 @@ posts
 
 ```
 
-Post module contains 2 smart components and 2 dummy components. Containers are responsible for using post service, fetch data and
+Post module contains 2 smart components and 3 dummy components. Containers are responsible for using post service, fetch data and
 deliver it to the template.
 
 #### Models
