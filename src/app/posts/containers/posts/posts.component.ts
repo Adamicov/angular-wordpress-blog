@@ -49,7 +49,7 @@ export class PostsComponent implements OnInit {
     );
   }
 
-  setPagination(page: Page<Post>): Observable<any> {
+  setPagination(page: Page<Post>): Observable<Post[]> {
     const pagesAvailable = page.itemsCount / this.pagination.itemsPerPage;
     if (pagesAvailable < this.pagination.getCurrentPage()) {
       return throwError('PAGE_NOT_EXIST');

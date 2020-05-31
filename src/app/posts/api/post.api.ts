@@ -25,7 +25,7 @@ export class PostApi {
       .pipe(map((res) => new Page<Post>(Post.adaptList(res.posts), res.found)));
   }
 
-  getPostBySlug(slug: string) {
+  getPostBySlug(slug: string): Observable<Post> {
     const query = `/slug:${slug}`;
     const requestUri = this.API_URL + query;
     return this.http.get<any>(requestUri).pipe(map((post) => Post.adapt(post)));
