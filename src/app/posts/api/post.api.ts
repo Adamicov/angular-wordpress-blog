@@ -1,13 +1,13 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { config } from '@core/config';
-import { Comment } from '@models/comment';
-import { Id } from '@models/types';
-import { Post } from '@models/post';
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {config} from '@core/config';
+import {Comment} from '@models/comment';
+import {Id} from '@models/types';
+import {Post} from '@models/post';
 
-import { Observable } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
-import { Page } from '@models/page';
+import {Observable} from 'rxjs';
+import {map, shareReplay} from 'rxjs/operators';
+import {Page} from '@models/page';
 
 @Injectable({ providedIn: 'root' })
 export class PostApi {
@@ -28,7 +28,7 @@ export class PostApi {
   getPostBySlug(slug: string): Observable<Post> {
     const query = `/slug:${slug}`;
     const requestUri = this.API_URL + query;
-    return this.http.get<any>(requestUri).pipe(map((post) => Post.adapt(post)));
+    return this.http.get<any>(requestUri).pipe(map((post) => Post.adapt(post)), shareReplay(1));
   }
 
   getCommentsByPostId(postId: Id, page = 1): Observable<Page<Comment>> {
