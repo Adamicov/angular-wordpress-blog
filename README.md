@@ -2,6 +2,7 @@
 
 This Angular project is created for the recrutation purpose. It uses public wordpress [API](https://developer.wordpress.com/docs/api/) to get
 posts and comments from https://en.blog.wordpress.com/.
+
 Demo: https://adamicov.github.io/angular-wordpress-blog/
 
 ## Additional libraries
