@@ -1,5 +1,6 @@
 import { Id } from './types';
 import { Author } from './author';
+import { PostDto } from '../dto/post.dto';
 
 export class Post {
   constructor(
@@ -13,7 +14,8 @@ export class Post {
     public excerpt: string
   ) {}
 
-  static adapt(item: any): Post {
+  // TODO: uncouple dto from domain
+  static adapt(item: PostDto): Post {
     return new Post(
       item.ID,
       item.title,
@@ -27,6 +29,6 @@ export class Post {
   }
 
   static adaptList(items: any[]): Post[] {
-    return items.map(item => this.adapt(item));
+    return items.map((item) => this.adapt(item));
   }
 }

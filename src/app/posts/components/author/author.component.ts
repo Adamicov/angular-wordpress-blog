@@ -1,18 +1,12 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {Author} from '@models/author';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { Author } from '../../../domain/author';
 
 @Component({
   selector: 'app-author',
   templateUrl: './author.component.html',
-  styleUrls: ['./author.component.css']
+  styleUrls: ['./author.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AuthorComponent implements OnInit {
-
+export class AuthorComponent {
   @Input() author: Author;
-
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
 }

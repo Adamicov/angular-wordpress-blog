@@ -35,7 +35,7 @@ src
 │   │   └── types.ts
 │   ├── posts
 │   │   ├── api
-│   │   │   └── post.api.ts
+│   │   │   └── http-post.api-service.ts
 │   │   ├── components
 │   │   │   ├── comment
 │   │   │   │   ├── comment.component.css
@@ -86,7 +86,7 @@ Shared is responsible for future components created. Currently, it exports just 
 ```
 posts
 ├── api
-│   └── post.api.ts
+│   └── http-post.api-service.ts
 ├── components
 │   ├── comment
 │   │   ├── comment.component.css

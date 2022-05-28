@@ -1,13 +1,20 @@
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
-import {Post} from '@models/post';
-import {BehaviorSubject, Observable, of} from 'rxjs';
-import {ActivatedRoute} from '@angular/router';
-import {catchError, filter, map, mergeMap, switchMap, tap} from 'rxjs/operators';
-import {PostApi} from '../../api/post.api';
-import {Comment} from '@models/comment';
-import {Pagination} from '@models/pagination';
-import {config} from '@core/config';
-import {Page} from '@models/page';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { Post } from '../../../domain/post';
+import { BehaviorSubject, Observable, of } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
+import {
+  catchError,
+  filter,
+  map,
+  mergeMap,
+  switchMap,
+  tap,
+} from 'rxjs/operators';
+import { HttpPostApiService } from '../../api/http-post.api-service';
+import { Comment } from '../../../domain/comment';
+import { Pagination } from '../../../domain/pagination';
+import { config } from '@core/config';
+import { Page } from '../../../domain/page';
 
 @Component({
   selector: 'app-post-detail',
@@ -28,7 +35,7 @@ export class PostDetailComponent implements OnInit {
   commentsAmount: number;
   error = false;
 
-  constructor(private route: ActivatedRoute, private api: PostApi) {}
+  constructor(private route: ActivatedRoute, private api: HttpPostApiService) {}
 
   ngOnInit(): void {
     this.post$ = this.route.params.pipe(
@@ -56,7 +63,7 @@ export class PostDetailComponent implements OnInit {
   fetchComments(): void {
     const currentPage = this.pagination.getCurrentPage();
     this.comments$ = this.post$.pipe(
-      tap(() =>  this.commentsLoader$.next(true)),
+      tap(() => this.commentsLoader$.next(true)),
       map((post) => post.id),
       mergeMap((id) => this.api.getCommentsByPostId(id, currentPage)),
       switchMap((page) => this.setPagination(page)),

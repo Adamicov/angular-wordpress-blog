@@ -1,22 +1,19 @@
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-
-import {config} from '@core/config';
-import {UtilsService} from '@shared/utils.service';
-import {Post} from '@models/post';
-import {Page} from '@models/page';
-import {Pagination} from '@models/pagination';
-
-import {BehaviorSubject, Observable, of, throwError} from 'rxjs';
-import {catchError, map, switchMap, tap} from 'rxjs/operators';
-
-import {PostApi} from '../../api/post.api';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { config } from '@core/config';
+import { UtilsService } from '@shared/utils.service';
+import { Post } from '../../../domain/post';
+import { Page } from '../../../domain/page';
+import { Pagination } from '../../../domain/pagination';
+import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
+import { catchError, map, switchMap, tap } from 'rxjs/operators';
+import { HttpPostApiService } from '../../api/http-post.api-service';
 
 @Component({
   selector: 'app-posts',
   templateUrl: './posts.component.html',
   styleUrls: ['./posts.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PostsComponent implements OnInit {
   posts$: Observable<Post[]>;
@@ -29,7 +26,7 @@ export class PostsComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private api: PostApi,
+    private api: HttpPostApiService,
     private utils: UtilsService,
     private router: Router
   ) {}
@@ -38,14 +35,17 @@ export class PostsComponent implements OnInit {
     this.posts$ = this.route.queryParams.pipe(
       tap(() => this.loading$.next(true)),
       map((qParams) => qParams.page),
+      tap(console.log),
       map((pageNumber) => this.utils.validatePage(pageNumber)),
       tap((pageNumber) => this.pagination.setCurrentPage(pageNumber)),
-      switchMap((pageNumber) => this.api.getPosts(pageNumber)),
+      switchMap((pageNumber) =>
+        this.api.getPosts(pageNumber).pipe(tap(console.log))
+      ),
       switchMap((pagedRes) => this.setPagination(pagedRes)),
       catchError((err) => this.handleError(err)),
       tap(() => {
         this.loading$.next(false);
-      }),
+      })
     );
   }
 
@@ -65,15 +65,15 @@ export class PostsComponent implements OnInit {
     return of([]);
   }
 
-  pageChanges(page: number) {
+  pageChanges(page: number): void {
     window.scroll({
       top: 0,
-      behavior: "smooth",
+      behavior: 'smooth',
     });
     this.router.navigate([], { queryParams: { page } });
   }
 
-  onClick(post: Post) {
+  onClick(post: Post): void {
     this.router.navigate(['posts', post.slug]);
   }
 }
