@@ -81,6 +81,12 @@
             "assets": ["src/favicon.ico", "src/assets"],
             "styles": ["src/styles.css"],
             "scripts": []
+          },
+          "configurations": {
+            "sourceMap": false,
+            "codeCoverage": true,
+            "browsers": "ChromeHeadless",
+            "watch": false
           }
         },
         "lint": {
@@ -89,6 +95,9 @@
             "tsConfig": ["tsconfig.app.json", "tsconfig.spec.json"],
             "exclude": ["**/node_modules/**"]
           }
+        },
+        "deploy": {
+          "builder": "angular-cli-ghpages:deploy"
         }
       }
     }
