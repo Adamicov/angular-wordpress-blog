@@ -16,6 +16,7 @@ describe('PostDetailComponent', () => {
     fixture = TestBed.createComponent(PostDetailComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+    const a = '5';
   });
 
   // it('should create', () => {
