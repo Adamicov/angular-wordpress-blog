@@ -24,9 +24,6 @@ src
 │   ├── app.component.ts
 │   ├── app.module.ts
 │   ├── app-routing.module.ts
-│   ├── core
-│   │   ├── config.ts
-│   │   └── core.module.ts
 │   ├── models
 │   │   ├── author.ts
 │   │   ├── comment.ts
@@ -66,17 +63,6 @@ src
 │       └── utils.service.ts
 
 ```
-
-I have made 3 modules:
-
-- core
-- shared
-- posts
-
-#### Core
-
-Core is responsible for importing core modules, such as HttpClient and RoutingModule. It's also contains config
-that has an api link and pagination settings.
 
 #### Shared
 
@@ -120,4 +106,4 @@ deliver it to the template.
 
 #### Models
 
-Models are responsible for modeling api data.
+Domain objects
